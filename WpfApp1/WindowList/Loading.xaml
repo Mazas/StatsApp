@@ -1,0 +1,14 @@
+﻿<Window x:Class="WpfApp1.WindowList.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Loading..." Height="160" Width="385" WindowStartupLocation="CenterScreen" 
+        MinWidth="385" MinHeight="156" MaxWidth="385" MaxHeight="160" ShowInTaskbar="False"
+        Topmost="True" BorderBrush="Black" ResizeMode="NoResize" WindowStyle="None" BorderThickness="1" Background="WhiteSmoke" Foreground="Black">
+    
+    
+    <Label Name="LoadingText" Content="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="152.255,62.02"/>
+</Window>

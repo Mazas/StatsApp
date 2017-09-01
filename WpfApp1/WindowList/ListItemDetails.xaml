@@ -1,0 +1,42 @@
+﻿<Window x:Class="WpfApp1.WindowList.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Details" Width="564" Height="280" MinWidth="564" MinHeight="280" MaxWidth="564" MaxHeight="280">
+    <Grid Margin="0,0,0,0
+          ">
+        <Border HorizontalAlignment="Left" Margin="10,129.04,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1" Grid.ColumnSpan="3">
+            <Button Click="CloseButton" Content="Close" Height="19.96"/>
+        </Border>
+        <Border HorizontalAlignment="Right" Margin="420,10,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="2" Grid.ColumnSpan="3">
+            <Button Click="SaveButton"  Content="Save" Height="19.96" Margin="-5,0,5,0"/>
+        </Border>
+        <Border HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" />
+        <TextBox HorizontalAlignment="Left" x:Name="androidN" Height="23" Margin="125,24.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
+        <Border HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="2" Grid.ColumnSpan="3"/>
+        <Border HorizontalAlignment="Left" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1"/>
+        <DockPanel Grid.ColumnSpan="5" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" x:Name="javaN" Height="23" Margin="125,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
+        <Label Content="Android" HorizontalAlignment="Left" Margin="12.276,24.04,0,0" VerticalAlignment="Top"/>
+        <Label Content="Ruby" HorizontalAlignment="Left" Margin="390.45,24.04,0,0" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2"/>
+        <Label Content="C++" HorizontalAlignment="Left" Margin="201.379,55,0,0" VerticalAlignment="Top"/>
+        <Label Content="PHP" HorizontalAlignment="Left" Margin="201.379,24.04,0,0" VerticalAlignment="Top"/>
+        <Label Content="JavaScript" HorizontalAlignment="Left" Margin="201.379,85.96,0,0" VerticalAlignment="Top"/>
+        <Label Content="Java" HorizontalAlignment="Left" Margin="12.276,55,0,0" VerticalAlignment="Top"/>
+        <Label Content="C#.NET" HorizontalAlignment="Left" Margin="12.276,85.96,0,0" VerticalAlignment="Top"/>
+        <Label Content="IOS" HorizontalAlignment="Left" Margin="390.45,52.04,0,0" VerticalAlignment="Top" Grid.Column="2"/>
+        <TextBox HorizontalAlignment="Left" x:Name="net" Height="23" Margin="125,85.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
+        <TextBox HorizontalAlignment="Left" x:Name="php" Height="23" Margin="323.984,24.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
+        <TextBox HorizontalAlignment="Left" x:Name="script" Height="23" Margin="323.984,85.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
+        <TextBox HorizontalAlignment="Left" x:Name="cpp" Height="23" Margin="323.984,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
+        <TextBox HorizontalAlignment="Left" x:Name="ruby" Height="23" Margin="483.984,24.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
+        <TextBox HorizontalAlignment="Left" x:Name="ios" Height="23" Margin="483.984,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
+        <Label Content="Total" HorizontalAlignment="Left" Margin="390.45,83,0,0" VerticalAlignment="Top"/>
+        <Label Content="" Name="Total" HorizontalAlignment="Left" Margin="483.984,85.96,0,0" VerticalAlignment="Top" Width="36.016"/>
+
+    </Grid>
+
+</Window>

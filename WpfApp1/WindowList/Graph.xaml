@@ -1,0 +1,15 @@
+﻿<Window x:Class="WpfApp1.WindowList.Graph"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:local="clr-namespace:WpfApp1"
+        Title="Graph" Height="450" Width="866.192" WindowStartupLocation="Manual">
+    <Grid>
+        <oxy:PlotView Model="{Binding Model}"/>
+        <Button Name="TotalButton" Opacity="1.0" Content="" Click="Toggle_Total" HorizontalAlignment="Left" Margin="614.149,39.076,0,0" VerticalAlignment="Top" Width="70" Height="47">
+            <Button.BorderBrush>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Button.BorderBrush>
+        </Button>
+    </Grid>
+</Window>

@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfApp1.WindowList.NewAccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Create New Account" Height="290" Width="490" MinHeight="290" MaxHeight="290" MinWidth="490" MaxWidth="490">
+    <Grid>
+        <PasswordBox HorizontalAlignment="Left" Margin="31.697,89.705,0,0" VerticalAlignment="Top" Width="120" Height="25.511" Name="pass1"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="156.697,89.705,0,0" VerticalAlignment="Top" Height="23"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="31.697,54.007,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="username"/>
+        <Label Content="Username" HorizontalAlignment="Left" Margin="156.697,54.007,0,0" VerticalAlignment="Top"/>
+        <Button Content="Cancel" Click="Cancel" HorizontalAlignment="Left" Margin="31.697,216.02,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Create" Click="Confirm" HorizontalAlignment="Left" Margin="373.134,216.02,0,0" VerticalAlignment="Top" Width="75"/>
+        <PasswordBox HorizontalAlignment="Left"  Margin="31.697,132.268,0,0" VerticalAlignment="Top" Width="120" Height="25.511" Name="pass2" PasswordChanged="TextChanged"/>
+        <Label Content="Repeat Password" HorizontalAlignment="Left" Margin="156.697,132.268,0,0" VerticalAlignment="Top" Height="25.511"/>
+        <Label Content="" Name="label1" HorizontalAlignment="Left" Margin="300.118,54.007,0,0" VerticalAlignment="Top" Width="116.254"/>
+        <CheckBox Name="AdminAcc" Content="Administrator" HorizontalAlignment="Left" Margin="300.118,95.705,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
