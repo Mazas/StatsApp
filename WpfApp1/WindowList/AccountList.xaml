@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.WindowList"
         mc:Ignorable="d"
-        Title="AccountList" Height="300" Width="646.875">
+        Title="Account List" Height="300" Width="646.875">
     <Grid>
-        <ListView x:Name="ListView" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" Margin="0,0,0,66">
+        <ListView x:Name="ListView" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" Margin="0,0,0,41.973">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -17,5 +17,6 @@
         <Border HorizontalAlignment="Right">
             <Button Content="OK" HorizontalAlignment="Left" Margin="0,0,10,10" Click="Button_Click" VerticalAlignment="Bottom" Width="75"/>
         </Border>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="AddButton" Width="75"/>
     </Grid>
 </Window>

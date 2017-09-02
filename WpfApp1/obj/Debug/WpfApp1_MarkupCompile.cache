@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\ivana\Source\Repos\Csharp\WpfApp1\obj\Debug\
+C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\
 WpfApp1
 none
 false
 DEBUG;TRACE
-C:\Users\ivana\Source\Repos\Csharp\WpfApp1\WindowList\App.xaml
-8767257428
+C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\App.xaml
+91915481078
 
-15934070173
-76121250373
-WindowList\AccountList.xaml;WindowList\Graph.xaml;WindowList\MainWindow.xaml;WindowList\Login.xaml;WindowList\NewAccountWindow.xaml;WindowList\Simple Styles.xaml;WindowList\ListItemDetails.xaml;WindowList\Loading.xaml;
+16503028741
+76-1248443347
+WindowList\AccountInfo.xaml;WindowList\AccountList.xaml;WindowList\Graph.xaml;WindowList\MainWindow.xaml;WindowList\Login.xaml;WindowList\NewAccountWindow.xaml;WindowList\Simple Styles.xaml;WindowList\ListItemDetails.xaml;WindowList\Loading.xaml;
 
 False
 

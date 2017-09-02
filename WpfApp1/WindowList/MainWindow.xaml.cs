@@ -319,6 +319,8 @@ private void DbClick(object sender, RoutedEventArgs e)
                 details.Show();
             }
         }
+
+        // Open Plot window
         void Plot(object sender, RoutedEventArgs e)
         {
             Sort("Date", ListSortDirection.Ascending);
@@ -346,7 +348,7 @@ private void DbClick(object sender, RoutedEventArgs e)
         }
 
 
-        //Sorting
+        // Sorting
         void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
         {
             GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
@@ -398,7 +400,7 @@ private void DbClick(object sender, RoutedEventArgs e)
                 }
             }
         }
-
+        // Sorting
         private void Sort(string sortBy, ListSortDirection direction)
         {
             ICollectionView dataView = CollectionViewSource.GetDefaultView(ListView.Items);
@@ -407,7 +409,7 @@ private void DbClick(object sender, RoutedEventArgs e)
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
         }
-
+        // Retrieve xml from API and save it to DB
         public void RetrieveXML()
         {
  //           Window2 load = new Window2();
@@ -468,7 +470,7 @@ private void DbClick(object sender, RoutedEventArgs e)
 
         private void EditAccounts(object sender, RoutedEventArgs e)
         {
-            AccountList accountList = new AccountList(connector);
+            AccountList accountList = new AccountList(this);
             accountList.Show();
         }
     }

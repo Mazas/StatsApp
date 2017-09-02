@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\App.xaml
-8767257428
+91915481078
 
-19-1128374874
+20-1559416306
 76-1248443347
-WindowList\AccountList.xaml;WindowList\Graph.xaml;WindowList\MainWindow.xaml;WindowList\Login.xaml;WindowList\NewAccountWindow.xaml;WindowList\Simple Styles.xaml;WindowList\ListItemDetails.xaml;WindowList\Loading.xaml;
+WindowList\AccountInfo.xaml;WindowList\AccountList.xaml;WindowList\Graph.xaml;WindowList\MainWindow.xaml;WindowList\Login.xaml;WindowList\NewAccountWindow.xaml;WindowList\Simple Styles.xaml;WindowList\ListItemDetails.xaml;WindowList\Loading.xaml;
 
-True
+False
 

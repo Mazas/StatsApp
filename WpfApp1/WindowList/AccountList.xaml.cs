@@ -24,11 +24,12 @@ namespace WpfApp1.WindowList
     {
         GridViewColumnHeader _lastHeaderClicked = null;
         ListSortDirection _lastDirection = ListSortDirection.Ascending;
-        private Connector connector;
+        private MainWindow main;
+        bool trigger = false;
 
-        public AccountList(Connector connector)
+        public AccountList(MainWindow main)
         {
-            this.connector = connector;
+            this.main = main;
             InitializeComponent();
             PopulateList();
         }
@@ -65,7 +66,7 @@ namespace WpfApp1.WindowList
 
                 string[] colums = { "username", "elev" };
 
-                ArrayList[] arr = connector.ReadAll("SELECT * FROM mydb.users;", colums);
+                ArrayList[] arr = main.connector.ReadAll("SELECT * FROM mydb.users;", colums);
                 for (int i = 0; i < arr.Length; i++)
                 {
                     ListView.Items.Add(new AccountListItem
@@ -74,7 +75,7 @@ namespace WpfApp1.WindowList
                         elev = (string)arr[1][i]
                     });
                 }
-                //            ListView.MouseDoubleClick += ListViewItem_MouseDoubleClick;
+                ListView.MouseDoubleClick += ListViewItem_MouseDoubleClick;
             }catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
@@ -140,6 +141,27 @@ namespace WpfApp1.WindowList
             SortDescription sd = new SortDescription(sortBy, direction);
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
+        }
+
+        private void AddButton(object sender, RoutedEventArgs e)
+        {
+            main.NewAcc(sender,e);
+        }
+
+        void ListViewItem_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!trigger)
+            {
+                AccountListItem item = (AccountListItem)ListView.SelectedItem;
+                AccountInfo details = new AccountInfo(main.connector);
+                if (item.elev == "all")
+                {
+                    details.AdminBox.IsChecked = true;
+                }
+                details.Title = item.username;
+                details.username.Content = item.username;
+                details.Show();
+            }
         }
     }
 }

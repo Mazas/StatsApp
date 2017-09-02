@@ -86,6 +86,9 @@
     <Compile Include="Core\HashnSalt.cs" />
     <Compile Include="Core\Connector.cs" />
     <Compile Include="Core\ListItem.cs" />
+    <Compile Include="WindowList\AccountInfo.xaml.cs">
+      <DependentUpon>AccountInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowList\AccountList.xaml.cs">
       <DependentUpon>AccountList.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
     <Compile Include="WindowList\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
     </Compile>
+    <Page Include="WindowList\AccountInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowList\AccountList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
