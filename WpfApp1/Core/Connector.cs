@@ -16,6 +16,11 @@ namespace WpfApp1
 
         public Connector()
         {
+            /**
+             * SQL connections requires that ssl certificate was in the same folder as executable 
+             * 
+             */
+
             string connString;
             string path = Environment.CurrentDirectory;
             path.Replace('/','\\');
