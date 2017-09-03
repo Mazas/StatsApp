@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.WindowList"
         mc:Ignorable="d"
-        Title="Account Info" Height="320" Width="190" MaxWidth="190" MaxHeight="320" MinWidth="190" MinHeight="320" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
+        Title="Account Info" Height="320" Width="190" MaxWidth="190" MaxHeight="320" MinWidth="190" MinHeight="320" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" Closing="Window_Closing">
     <Grid>
         <Button Content="Close" Click="Close" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75"/>
         <Button Content="Save" Click="Save" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75"/>
@@ -14,6 +14,7 @@
         <TextBox Style="{StaticResource placeHolder}" Tag="Password" Name="Pass1" HorizontalAlignment="Center" Height="23" Margin="0,68.96,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox Style="{StaticResource placeHolder}" Tag="Repeat Password" Name="Pass2" HorizontalAlignment="Center" Height="23" Margin="0,96.96,0,0" VerticalAlignment="Top" Width="120"/>
         <CheckBox Name="AdminBox" Content="Administrator"  HorizontalAlignment="Center" Margin="0,124.96,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Message" Content="Label" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="32,230.08,32,0" Width="120"/>
 
     </Grid>
 </Window>

@@ -20,20 +20,69 @@ namespace WpfApp1.WindowList
     public partial class AccountInfo : Window
     {
         private Connector connector;
-        public AccountInfo(Connector conn)
+        private AccountList acc;
+        public AccountInfo(AccountList acc)
         {
-            this.connector = conn;
+            this.acc = acc;
+            connector = acc.main.connector;
             InitializeComponent();
+            Message.Content = "";
         }
 
         private void Save(object sender, RoutedEventArgs e)
         {
+            // Build query
 
+            string elev = (bool)AdminBox.IsChecked ? "all" : "none";
+            string query = query = "update mydb.users set elev='" + elev + "'";
+            if (Pass1.Text.Length==0 && Email.Text.Contains('@'))
+            {
+                query+=",email='"+Email.Text+"'";
+            }
+
+            if (Pass1.Text.Length >= 6)
+            {
+                if (Pass1.Text == Pass2.Text)
+                {
+                    string hashedPass = HashnSalt.Hash(Pass1.Text.Trim());
+                    query += ", pass='" + hashedPass + "'";
+                }
+                else
+                {
+                    Message.Content = "Passwords don`t match.";
+                }
+            }
+            else if (Pass1.Text.Length>0 && Pass1.Text.Length<6)
+            {
+                Message.Content = "Password is too short.";
+            }
+            query+= "where username = '"+username.Content+"';";
+
+            // Execute query
+
+            if (connector.NonQuery(query))
+            {
+                acc.windowOpen = false;
+                acc.PopulateList();
+                Close();
+            }
+            else
+            {
+                Message.Content = "Failed";
+            }
         }
 
         private void Close(object sender, RoutedEventArgs e)
         {
+            acc.windowOpen = false;
+            acc.PopulateList();
             Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            acc.windowOpen = false;
+            acc.PopulateList();
         }
     }
 }

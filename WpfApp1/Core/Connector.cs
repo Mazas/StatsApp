@@ -113,7 +113,10 @@ namespace WpfApp1
                 {
                     for (int i=0;i<colums.Length;i++)
                     {
-                        returnable[i].Add(reader.GetString(colums[i]));
+                        if (!reader.IsDBNull(i))
+                        { 
+                            returnable[i].Add(reader[colums[i]].ToString());
+                        }
                     }
                 }
                     /*ArrayList date = new ArrayList();

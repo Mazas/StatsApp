@@ -24,20 +24,22 @@ namespace WpfApp1.WindowList
     {
         GridViewColumnHeader _lastHeaderClicked = null;
         ListSortDirection _lastDirection = ListSortDirection.Ascending;
-        private MainWindow main;
-        bool trigger = false;
+        public MainWindow main;
+        AccountInfo details;
+        public bool windowOpen = false;
 
         public AccountList(MainWindow main)
         {
             this.main = main;
             InitializeComponent();
             PopulateList();
+
         }
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-        private void PopulateList()
+        public void PopulateList()
         {
             try
             {
@@ -54,17 +56,26 @@ namespace WpfApp1.WindowList
                     Header = "Elevation",
                     DisplayMemberBinding = new Binding("elev")
                 });
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Email",
+                    DisplayMemberBinding = new Binding("email")
+                });
 
 
                 gridView.Columns[0].DisplayMemberBinding.BindingGroupName = "Username";
                 gridView.Columns[1].DisplayMemberBinding.BindingGroupName = "elev";
+                gridView.Columns[2].DisplayMemberBinding.BindingGroupName = "email";
+
 
 
                 gridView.Columns[0].Width = 75;
                 gridView.Columns[1].Width = 75;
+                gridView.Columns[2].Width = 75;
 
+                ListView.MouseDoubleClick += ListViewItem_MouseDoubleClick;
 
-                string[] colums = { "username", "elev" };
+                string[] colums = { "username", "elev", "email" };
 
                 ArrayList[] arr = main.connector.ReadAll("SELECT * FROM mydb.users;", colums);
                 for (int i = 0; i < arr.Length; i++)
@@ -72,11 +83,12 @@ namespace WpfApp1.WindowList
                     ListView.Items.Add(new AccountListItem
                     {
                         username = (string)arr[0][i],
-                        elev = (string)arr[1][i]
+                        elev = (string)arr[1][i],
+                        email = (string)arr[2][i]
                     });
                 }
-                ListView.MouseDoubleClick += ListViewItem_MouseDoubleClick;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -145,23 +157,25 @@ namespace WpfApp1.WindowList
 
         private void AddButton(object sender, RoutedEventArgs e)
         {
-            main.NewAcc(sender,e);
+            main.NewAcc(sender, e);
         }
 
         void ListViewItem_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (!trigger)
+            if (!windowOpen)
             {
-                AccountListItem item = (AccountListItem)ListView.SelectedItem;
-                AccountInfo details = new AccountInfo(main.connector);
-                if (item.elev == "all")
-                {
-                    details.AdminBox.IsChecked = true;
-                }
-                details.Title = item.username;
-                details.username.Content = item.username;
-                details.Show();
+                details = new AccountInfo(this);
             }
+            AccountListItem item = (AccountListItem)ListView.SelectedItem;
+            if (item.elev == "all")
+            {
+                details.AdminBox.IsChecked = true;
+            }
+            details.Title = item.username;
+            details.Email.Text = item.email;
+            details.username.Content = item.username;
+            details.Show();
+            windowOpen = true;
         }
     }
 }

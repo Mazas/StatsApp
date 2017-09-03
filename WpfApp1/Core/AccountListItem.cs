@@ -9,6 +9,7 @@ namespace WpfApp1.Core
     public class AccountListItem
     {
         public string username { get; set; }
+        public string email { get; set; }
         public string elev { get; set; }
     }
 }
