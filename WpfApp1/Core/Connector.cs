@@ -17,7 +17,10 @@ namespace WpfApp1
         public Connector()
         {
             string connString;
-            connString = "Server=192.168.1.247; database=mydb; Uid=sslclient; Pwd=pass; SSL Mode=Required";
+            string path = Environment.CurrentDirectory;
+            path.Replace('/','\\');
+            connString = "Server=192.168.1.247;"+ "CertificateFile="+path+"\\client.pfx;" +
+  "CertificatePassword=pass;"+" database=mydb; Uid=sslclient; Pwd=pass; SSL Mode=Required";
             Conn = new MySqlConnection(connString);
         }
         //    Certificate Store Location=CurrentUser;
