@@ -14,7 +14,7 @@
         <TextBox Style="{StaticResource placeHolder}" Tag="Password" Name="Pass1" HorizontalAlignment="Center" Height="23" Margin="0,68.96,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox Style="{StaticResource placeHolder}" Tag="Repeat Password" Name="Pass2" HorizontalAlignment="Center" Height="23" Margin="0,96.96,0,0" VerticalAlignment="Top" Width="120"/>
         <CheckBox Name="AdminBox" Content="Administrator"  HorizontalAlignment="Center" Margin="0,124.96,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Message" Content="Label" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="32,230.08,32,0" Width="120"/>
+        <Label x:Name="Message" Content="Label" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="32,0,32,35" Width="120" RenderTransformOrigin="0.508,-1.234"/>
 
     </Grid>
 </Window>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Collections;
+using System.Data;
 
 namespace WpfApp1
 {
@@ -37,7 +38,8 @@ namespace WpfApp1
         {
             try
             {
-                MySqlCommand command = new MySqlCommand("select * from mydb.users where username = '"+username+"';", Conn);
+                MySqlCommand command = new MySqlCommand("select * from mydb.users where username = @username;", Conn);
+                command.Parameters.AddWithValue("@username", username);
                 MySqlDataReader reader;
                 Conn.Open();
 
@@ -173,9 +175,13 @@ namespace WpfApp1
         }
         //Delete entry
         //public bool DeleteItem(string query)
-        public bool NonQuery(string query)
+        public bool NonQuery(string[] col, string[] values,string query)
         {
             MySqlCommand command = new MySqlCommand(query, Conn);
+            for (int i=0;i<col.Length;i++)
+            {
+                command.Parameters.AddWithValue(col[i],values[i]);
+            }
             try
             {
                 command.Connection.Open();
@@ -193,10 +199,15 @@ namespace WpfApp1
 
 
         //Add an account to mydb.users
-        public bool Register(string message)
+        public bool Register(string[] message)
         {
-            string Query = "insert into mydb.users(username, pass, elev) values(" + message + ");";
+            string Query = "insert into mydb.users(username, pass, elev) values(@username ,@pass ,@elev);";
+
             MySqlCommand MyCommand2 = new MySqlCommand(Query, Conn);
+            MyCommand2.Parameters.AddWithValue("@username",message[0]);
+            MyCommand2.Parameters.AddWithValue("@pass",message[1]);
+            MyCommand2.Parameters.AddWithValue("@elev",message[2]);
+
             try
             {
                 

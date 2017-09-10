@@ -44,21 +44,13 @@ namespace WpfApp1.WindowList
             try
             {
                 main.trigger = false;
-                ListItem item = new ListItem
-                {
-                    Date = Title,
-                    Value1 = androidN.Text,
-                    Value2 = javaN.Text,
-                    Value3 = net.Text,
-                    Value4 = php.Text,
-                    Value5 = cpp.Text,
-                    Value6 = script.Text,
-                    Value7 = ruby.Text,
-                    Value8 = ios.Text,
-                };
-                if (!main.connector.NonQuery("update mydb.`table`set Android='"+ item.Value1 + "',Java='"+ item.Value2 + 
-                    "',`C#.NET`='"+ item.Value3 + "',PHP='"+item.Value4 + "',Cpp='"+ item.Value5 + 
-                    "',JavaScript='"+ item.Value6 + "',Ruby='" + item.Value7+"',IOS='"+ item.Value8 +"' where Date='"+item.Date+"';"))
+                string[] col = {"@Date","@android","@java","@net","@php","@cpp","@script","@ruby","@ios"};
+                string[] val = {Title, androidN.Text, javaN.Text, net.Text,php.Text,cpp.Text,script.Text,ruby.Text,ios.Text};
+
+                String query = "update mydb.`table`set Android=" + col[1] + ",Java=" + col[2] +
+                    ",`C#.NET`=" + col[3] + ",PHP=" + col[4] + ",Cpp=" + col[5] +
+                    ",JavaScript=" + col[6] + ",Ruby=" + col[7] + ",IOS=" + col[8] + " where Date=" + col[0] + ";";
+                if (!main.connector.NonQuery(col,val,query))
                 {
                     MessageBox.Show("Unable to connect");
                 }

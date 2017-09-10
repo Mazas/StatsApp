@@ -177,5 +177,21 @@ namespace WpfApp1.WindowList
             details.Show();
             windowOpen = true;
         }
+
+        private void DeleteButton(object sender, RoutedEventArgs e)
+        {
+            AccountListItem selectedItem = (AccountListItem)ListView.SelectedItem;
+            if (selectedItem != null)
+            {
+                string[] col = {"@username" };
+                string[] val = {selectedItem.username };
+                string query = "DELETE FROM mydb.users WHERE username=" +col[0]+ ";";
+                if (main.connector.NonQuery(col,val,query))
+                {
+                    // LabelText.Content = "Deleted";
+                    PopulateList();
+                }
+            }
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace WpfApp1.WindowList
                 {
                     elev = "none";
                 }
-                string command = "'" + username.Text.Trim() + "','" + hashedPass + "','" + elev + "'";
+                string[] command = { username.Text.Trim(), hashedPass, elev };
                 try
                 {
                     if (main.connector.Register(command))

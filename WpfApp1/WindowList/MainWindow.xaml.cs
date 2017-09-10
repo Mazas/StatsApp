@@ -251,8 +251,10 @@ namespace WpfApp1.WindowList
             ListItem selectedItem = (ListItem)ListView.SelectedItem;
             if (selectedItem != null)
             {
-                string query = "DELETE FROM mydb.`table` WHERE Date='" + selectedItem.Date + "';";
-                if (connector.NonQuery(query))
+                string query = "DELETE FROM mydb.`table` WHERE Date='@Date';";
+                string[] col = {"@Date"};
+                string[] val = {selectedItem.Date };
+                if (connector.NonQuery(col,val,query))
                 {
                     // LabelText.Content = "Deleted";
                     PopulateList();
@@ -444,19 +446,22 @@ private void DbClick(object sender, RoutedEventArgs e)
                     results.Add(xml.Root.Element("antal_platserTotal").Value);
                 }
 
-//                load.LoadingText.Content = "Saving...";
+                //                load.LoadingText.Content = "Saving...";
 
                 //add to the database
-                connector.NonQuery("insert into mydb.`table`(Date,Android,Java,`C#.NET`,PHP,Cpp,JavaScript,Ruby,IOS) values('" +
-                    DateTime.Today.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) + "','" +
-                    results[0] + "','" +
-                    results[1] + "','" +
-                    results[2] + "','" +
-                    results[3] + "','" +
-                    results[4] + "','" +
-                    results[5] + "','" +
-                    results[6] + "','" +
-                    results[7] + "');");
+                string[] col = { "@Date", "@Android", "@Java", "@C#.NET", "@PHP", "@Cpp", "@JavaScript", "@Ruby", "@IOS" };
+                string[] val = { DateTime.Today.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture), results[0].ToString(), results[1].ToString(),
+                    results[2].ToString(), results[3].ToString(), results[4].ToString(), results[5].ToString(), results[6].ToString(), results[7].ToString()};
+                connector.NonQuery(col,val,"insert into mydb.`table`(Date,Android,Java,`C#.NET`,PHP,Cpp,JavaScript,Ruby,IOS) values(" +
+                    col[0] + "," +
+                    col[1] + "," +
+                    col[2] + "," +
+                    col[3] + "," +
+                    col[4] + "," +
+                    col[5] + "," +
+                    col[6] + "," +
+                    col[7] + "," +
+                    col[8] + ");");
                 Application.Current.Dispatcher.Invoke(() => {
                     PopulateList();
                 });
