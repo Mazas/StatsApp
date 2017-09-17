@@ -40,6 +40,9 @@
                     <MenuItem Header="_New Account" Click="NewAcc"/>
                     <MenuItem Header="_Edit Accounts" Click="EditAccounts"/>
                 </MenuItem>
+                <MenuItem Name="HelpList" Header="_Help">
+                    <MenuItem Header="_Show Error Log" Click="ShowErrLog"/>
+                </MenuItem>
             </Menu>
 
         </DockPanel>

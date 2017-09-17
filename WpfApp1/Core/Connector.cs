@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Collections;
 using System.Data;
+using System.IO;
 
 namespace WpfApp1
 {
@@ -98,6 +99,7 @@ namespace WpfApp1
             catch (Exception e)
             {
                 returnString = e.Message;
+                WriteError(DateTime.Now.ToString() + "\n"+commandString+"\n"+e.Message+"\n---------------------------------------------------------------------------------------\n");
             }
             Conn.Close();
             return returnString;
@@ -169,6 +171,13 @@ namespace WpfApp1
             }
             catch (Exception e)
             {
+                string contents = DateTime.Now.ToString()+"\n";
+                foreach (string s in colums)
+                {
+                    contents += s + " ";
+                }
+                contents+="\n" + e.Message + "\n---------------------------------------------------------------------------------------\n";
+                WriteError(contents);
                 Conn.Close();
                 throw e;
             }
@@ -187,10 +196,24 @@ namespace WpfApp1
                 command.Connection.Open();
                 command.ExecuteNonQuery();
                 command.Connection.Close();
+
                 return true;
             }
             catch (Exception ex)
             {
+         /*       if (ex.Message.Contains("Duplicate entry"))
+                {
+                    command.Connection.Close();
+                    return false;
+                }*/
+                string contents = DateTime.Now.ToString()+"\n"+query+"\n";
+                foreach(string s in values)
+                {
+                    contents += s + " ";
+                }
+                contents += "\n"+ex.Message+"\n---------------------------------------------------------------------------------------\n";
+                WriteError(contents);
+       
                 command.Connection.Close();
                 Console.WriteLine(ex.Message);
                 return false;
@@ -226,9 +249,31 @@ namespace WpfApp1
             }
             catch (Exception ex)
             {
+                WriteError(DateTime.Now.ToString() + "\n" + Query + "\n"+message[0]+ " "+message[1]+" "+message[2]+"\n" + ex.Message + "\n---------------------------------------------------------------------------------------\n");
                 MyCommand2.Connection.Close();
                 throw ex;
                 //return false;
+            }
+        }
+        private void WriteError(string error)
+        {
+            System.IO.Directory.CreateDirectory("Logs");
+            string path = @"Logs\ErrorLog.txt";
+
+            if (!File.Exists(path))
+            {
+                // Create a file to write to.
+                using (StreamWriter sw = File.CreateText(path))
+                {
+                    sw.WriteLine(error);
+                }
+            }
+            else
+            {
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(error);
+                }
             }
         }
     }

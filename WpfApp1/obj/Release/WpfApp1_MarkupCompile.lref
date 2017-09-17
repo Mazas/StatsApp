@@ -1,8 +1,11 @@
 ﻿
-FC:\Users\ivana\Source\Repos\Csharp\WpfApp1\App.xaml;;
-FC:\Users\ivana\Source\Repos\Csharp\WpfApp1\Graph.xaml;;
-FC:\Users\ivana\Source\Repos\Csharp\WpfApp1\Login.xaml;;
-FC:\Users\ivana\Source\Repos\Csharp\WpfApp1\NewAccountWindow.xaml;;
-FC:\Users\ivana\Source\Repos\Csharp\WpfApp1\ListItemDetails.xaml;;
-FC:\Users\ivana\Source\Repos\Csharp\WpfApp1\Loading.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\App.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\AccountInfo.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\AccountList.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\ErrorLog.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\Graph.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\Login.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\NewAccountWindow.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\ListItemDetails.xaml;;
+FC:\Users\ivana\Source\Repos\StatsApp\WpfApp1\WindowList\Loading.xaml;;
 

@@ -61,16 +61,10 @@ C:\Users\ivana\Source\Repos\Csharp\WpfApp1\obj\Debug\WindowList\AccountList.baml
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\WpfApp1.exe.config
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\WpfApp1.exe
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\WpfApp1.pdb
-C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\Eto.dll
-C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\Eto.OxyPlot.Wpf.dll
-C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\Eto.Wpf.dll
-C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\Microsoft.Web.XmlTransform.dll
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\MySql.Data.dll
-C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\NuGet.Core.dll
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\OxyPlot.dll
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\OxyPlot.Wpf.dll
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\Eto.xml
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\MySql.Data.xml
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\OxyPlot.Wpf.pdb
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\bin\Debug\OxyPlot.Wpf.xml
@@ -102,3 +96,5 @@ C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WpfApp1.exe
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WpfApp1.pdb
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WindowList\AccountInfo.g.cs
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WindowList\AccountInfo.baml
+C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WindowList\ErrorLog.g.cs
+C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WindowList\ErrorLog.baml

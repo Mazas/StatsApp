@@ -47,6 +47,13 @@ namespace WpfApp1.WindowList
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (!(thread.ThreadState.Equals(ThreadState.Running)))
+            {
+                thread = new Thread(new ThreadStart(RetrieveXML));
+                thread.IsBackground = true;
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+            }
             PopulateList();    
             /*
             try
@@ -251,7 +258,7 @@ namespace WpfApp1.WindowList
             ListItem selectedItem = (ListItem)ListView.SelectedItem;
             if (selectedItem != null)
             {
-                string query = "DELETE FROM mydb.`table` WHERE Date='@Date';";
+                string query = "DELETE FROM mydb.`table` WHERE Date=@Date;";
                 string[] col = {"@Date"};
                 string[] val = {selectedItem.Date };
                 if (connector.NonQuery(col,val,query))
@@ -449,10 +456,11 @@ private void DbClick(object sender, RoutedEventArgs e)
                 //                load.LoadingText.Content = "Saving...";
 
                 //add to the database
-                string[] col = { "@Date", "@Android", "@Java", "@C#.NET", "@PHP", "@Cpp", "@JavaScript", "@Ruby", "@IOS" };
-                string[] val = { DateTime.Today.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture), results[0].ToString(), results[1].ToString(),
+                string[] col = { "@Android", "@Java", "@.NET", "@PHP", "@Cpp", "@JavaScript", "@Ruby", "@IOS" };
+                string[] val = { results[0].ToString(), results[1].ToString(),
                     results[2].ToString(), results[3].ToString(), results[4].ToString(), results[5].ToString(), results[6].ToString(), results[7].ToString()};
-                connector.NonQuery(col,val,"insert into mydb.`table`(Date,Android,Java,`C#.NET`,PHP,Cpp,JavaScript,Ruby,IOS) values(" +
+                connector.NonQuery(col,val,"insert into mydb.`table`(Date,Android,Java,`C#.NET`,PHP,Cpp,JavaScript,Ruby,IOS) values(" +"'"+
+                    DateTime.Today.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) + "',"+
                     col[0] + "," +
                     col[1] + "," +
                     col[2] + "," +
@@ -460,8 +468,7 @@ private void DbClick(object sender, RoutedEventArgs e)
                     col[4] + "," +
                     col[5] + "," +
                     col[6] + "," +
-                    col[7] + "," +
-                    col[8] + ");");
+                    col[7] + ");");
                 Application.Current.Dispatcher.Invoke(() => {
                     PopulateList();
                 });
@@ -477,6 +484,11 @@ private void DbClick(object sender, RoutedEventArgs e)
         {
             AccountList accountList = new AccountList(this);
             accountList.Show();
+        }
+
+        private void ShowErrLog(object sender, RoutedEventArgs e)
+        {
+            new ErrorLog().Show();
         }
     }
 }
