@@ -201,11 +201,11 @@ namespace WpfApp1
             }
             catch (Exception ex)
             {
-         /*       if (ex.Message.Contains("Duplicate entry"))
+                if (ex.Message.Contains("Duplicate entry"))
                 {
                     command.Connection.Close();
                     return false;
-                }*/
+                }
                 string contents = DateTime.Now.ToString()+"\n"+query+"\n";
                 foreach(string s in values)
                 {
