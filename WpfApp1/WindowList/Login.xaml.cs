@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using System.ComponentModel;
 using System.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace WpfApp1.WindowList
 {
@@ -38,6 +39,10 @@ namespace WpfApp1.WindowList
         }
         private void LoginBtn(object sender, RoutedEventArgs e)
         {
+            if (pass.Password.Length<4)
+            {
+                return;
+            }
             Window2 w = new Window2();
             w.Show();
             if (main.LogIn(usr.Text,pass.Password.ToString()))
@@ -68,6 +73,14 @@ namespace WpfApp1.WindowList
         public void LogOut()
         {
             logged = false;
+        }
+
+        private void Txt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                login.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            }
         }
     }
 }

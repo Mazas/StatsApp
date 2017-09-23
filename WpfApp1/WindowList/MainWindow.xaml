@@ -33,6 +33,7 @@
             <Menu DockPanel.Dock="Top" Height="20">
                 <MenuItem Header="_File">
                     <MenuItem Header="_Plot" Click="Plot"/>
+                    <MenuItem Header="_Next Table" Click="ChangeTable_Click"/>
                     <MenuItem Header="_Update" Click="Button_Click"/>
                     <MenuItem Header="_Close" Click="CloseExit"/>
                 </MenuItem>

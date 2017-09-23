@@ -15,7 +15,7 @@ namespace WpfApp1.WindowList
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Thread thread;
+        private bool threadStarted=false;
 
         GridViewColumnHeader _lastHeaderClicked = null;
         ListSortDirection _lastDirection = ListSortDirection.Ascending;
@@ -23,6 +23,16 @@ namespace WpfApp1.WindowList
         public bool trigger = false;
         public Connector connector;
         //private bool logged = false;
+
+        /* API QUERY STRINGS
+         0 for lanid=12
+         1 for all 
+        */
+        private string[] Titles = {"Skåne","Sweden" };
+        private int tableID = 0;
+        private string[] ApiQuery = { "platsannons/matchning?lanid=12&yrkesomradeid=3&sida=1&antalrader=10000&nyckelord=",
+        "platsannons/matchning?yrkesomradeid=3&sida=1&antalrader=10000&nyckelord="};
+        private string[] DBTable = { "`table`", "allsweden" };
 
 
         //INITIALIZE
@@ -39,6 +49,7 @@ namespace WpfApp1.WindowList
             {
                 login.Hide();
             }
+            Title = Titles[tableID];
         }
 
 
@@ -47,58 +58,15 @@ namespace WpfApp1.WindowList
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!(thread.ThreadState.Equals(ThreadState.Running)))
+            if (!threadStarted)
             {
-                thread = new Thread(new ThreadStart(RetrieveXML));
-                thread.IsBackground = true;
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
+                StartNewThread(RetrieveXML);
+                /* thread = new Thread(new ThreadStart(RetrieveXML));
+                 thread.IsBackground = true;
+                 thread.SetApartmentState(ApartmentState.STA);
+                 thread.Start();
+                 */
             }
-            PopulateList();    
-            /*
-            try
-            {
-                ListItem item = new ListItem {
-                    Date = DateTime.Today.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture),
-                    Value1 = androidN.Text,
-                    Value2 = javaN.Text,
-                    Value3 = net.Text,
-                    Value4 = php.Text,
-                    Value5 = cpp.Text,
-                    Value6 = script.Text,
-                    Value7 = ruby.Text,
-                    Value8 = ios.Text,
-                };
-                if (!connector.DeleteItem("insert into mydb.`table`(Date,Android,Java,`C#.NET`,PHP,Cpp,JavaScript,Ruby,IOS) values('" +
-                    item.Date+"','" +
-                    item.Value1+"','"+
-                    item.Value2+"','"+
-                    item.Value3+"','"+
-                    item.Value4+"','"+
-                    item.Value5+"','"+
-                    item.Value6+"','"+
-                    item.Value7+"','"+
-                    item.Value8+"');"))
-                {
-                    MessageBox.Show("Unable to connect");
-                }
-                else
-                {
-                    PopulateList();
-                    androidN.Text = "";
-                    javaN.Text = "";
-                    net.Text = "";
-                    php.Text = "";
-                    cpp.Text = "";
-                    script.Text = "";
-                    ruby.Text = "";
-                    ios.Text = "";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }*/
         }
 
 
@@ -120,10 +88,7 @@ namespace WpfApp1.WindowList
                     NewAccButton.Visibility = Visibility.Visible;
                     DeleteButton.Visibility = Visibility.Visible;
                 }
-                thread = new Thread(new ThreadStart(RetrieveXML));
-                thread.IsBackground = true;
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
+                StartNewThread(RetrieveXML);
                 return returnThis;
             }
             catch (Exception ex)
@@ -214,7 +179,7 @@ namespace WpfApp1.WindowList
                 }
                 string[] colums = { "Date","Android", "Java", "C#.NET", "PHP", "Cpp", "JavaScript", "Ruby", "IOS"};
 
-                ArrayList[] arr = connector.ReadAll("SELECT * FROM mydb.`table`;",colums);
+                ArrayList[] arr = connector.ReadAll("SELECT * FROM mydb."+DBTable[tableID]+";",colums);
                 ArrayList date = arr[0];
                 ArrayList Android = arr[1];
                 ArrayList Java = arr[2];
@@ -240,7 +205,6 @@ namespace WpfApp1.WindowList
                     });
                 }
                 ListView.MouseDoubleClick += ListViewItem_MouseDoubleClick;
-                
             }
             catch (Exception ex)
             {
@@ -258,7 +222,7 @@ namespace WpfApp1.WindowList
             ListItem selectedItem = (ListItem)ListView.SelectedItem;
             if (selectedItem != null)
             {
-                string query = "DELETE FROM mydb.`table` WHERE Date=@Date;";
+                string query = "DELETE FROM mydb."+DBTable[tableID]+" WHERE Date=@Date;";
                 string[] col = {"@Date"};
                 string[] val = {selectedItem.Date };
                 if (connector.NonQuery(col,val,query))
@@ -275,16 +239,7 @@ namespace WpfApp1.WindowList
             Environment.Exit(0);
         }
 
-        /*
-private void DbClick(object sender, RoutedEventArgs e)
-{
-   ListItem item = (ListItem)ListView.SelectedItem;
-   TextBox box = new TextBox();
-   box.Text = item.Name;
-   ListView.SelectedItem = box;
 
-}
-*/
         //Open a window to create new account
         public void NewAcc(object sender, RoutedEventArgs e)
         {
@@ -421,60 +376,85 @@ private void DbClick(object sender, RoutedEventArgs e)
         // Retrieve xml from API and save it to DB
         public void RetrieveXML()
         {
- //           Window2 load = new Window2();
+
+            //           Window2 load = new Window2();
             try
             {
-
-//                load.LoadingText.Content = "Connecting...";
-//                load.Show();
-                string[] lib = { "Android", "Java", "C#.NET", "PHP", "C++", "JavaScript", "Ruby", "IOS" };
-                ArrayList results = new ArrayList();
-                foreach (string s in lib)
+                for (int i = 0; i <= ApiQuery.Length - 1; i++)
                 {
-                    var baseUrl = @"http://api.arbetsformedlingen.se/";
-                    // method platsannons/soklista/komunner with parameter landid set to some value
-                    var method = string.Format("platsannons/matchning?lanid=12&yrkesomradeid=3&nyckelord=" + s);
-                    //var method = string.Format("platsannons/soklista/yrkesomraden");
-                    var client = new System.Net.WebClient();
-                    // important - the service requires this two parameters!
-                    client.Headers.Add(System.Net.HttpRequestHeader.Accept, "application/xml");
-                    client.Headers.Add(System.Net.HttpRequestHeader.AcceptLanguage, "en-US");
-                    // retrieve content
-                    var responseContent = client.DownloadString(string.Format("{0}{1}", baseUrl, method));
-                    // "create" the xml object
-                    var xml = System.Xml.Linq.XDocument.Parse(responseContent);
-                    // do something with the xml
-                    /*
-                    xml.Root.Descendants("matchningslista").ToList().ForEach(li =>
-                     {
-                         Console.WriteLine(string.Format("{0} - {1}", li.Element("antal_platserTotal").Value, li.Element("antal_platsannonser").Value));
-                     });
-                     */
-                    results.Add(xml.Root.Element("antal_platserTotal").Value);
-                }
 
-                //                load.LoadingText.Content = "Saving...";
+                    // Check if entry in the DB already exists, not to waste time retrieving XML
+                    string[] colums = { "Date"};
+                    ArrayList[] arr = connector.ReadAll("SELECT * FROM mydb." + DBTable[i] +
+                        " where Date='"+ DateTime.Today.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) + "';", colums);
+                    try
+                    {
+                        //Throws index out of range exception if there is no entry
+                        if (arr[0][0] != null)
+                        {
+                            continue;
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.Error.WriteLine(exception.Message);
+                    }
+                    //                load.LoadingText.Content = "Connecting...";
+                    //                load.Show();
+                    string[] lib = { "Android", "Java", "C#.NET", "PHP", "C++", "JavaScript", "Ruby", "IOS" };
+                    ArrayList results = new ArrayList();
+                    foreach (string s in lib)
+                    {
+                        var baseUrl = @"http://api.arbetsformedlingen.se/";
+                        // method platsannons/soklista/komunner with parameter landid set to some value
+                        var method = string.Format(ApiQuery[i] + s);
+                        //var method = string.Format("platsannons/soklista/yrkesomraden");
+                        var client = new System.Net.WebClient();
+                        // important - the service requires this two parameters!
+                        client.Headers.Add(System.Net.HttpRequestHeader.Accept, "application/xml");
+                        client.Headers.Add(System.Net.HttpRequestHeader.AcceptLanguage, "en-US");
+                        // retrieve content
+                        var responseContent = client.DownloadString(string.Format("{0}{1}", baseUrl, method));
+                        // "create" the xml object
+                        var xml = System.Xml.Linq.XDocument.Parse(responseContent);
+                        // do something with the xml
+                        /*
+                        xml.Root.Descendants("matchningslista").ToList().ForEach(li =>
+                         {
+                             Console.WriteLine(string.Format("{0} - {1}", li.Element("antal_platserTotal").Value, li.Element("antal_platsannonser").Value));
+                         });
+                         */
+                        results.Add(xml.Root.Element("antal_platserTotal").Value);
+                            
+                            Console.WriteLine(xml.Root.Element("antal_platserTotal").Value+"Antal sidor: "+xml.Root.Element("antal_sidor").Value);
+                    }
 
-                //add to the database
-                string[] col = { "@Android", "@Java", "@.NET", "@PHP", "@Cpp", "@JavaScript", "@Ruby", "@IOS" };
-                string[] val = { results[0].ToString(), results[1].ToString(),
+                    //                load.LoadingText.Content = "Saving...";
+
+                    //add to the database
+                    string[] col = { "@Android", "@Java", "@.NET", "@PHP", "@Cpp", "@JavaScript", "@Ruby", "@IOS" };
+                    string[] val = { results[0].ToString(), results[1].ToString(),
                     results[2].ToString(), results[3].ToString(), results[4].ToString(), results[5].ToString(), results[6].ToString(), results[7].ToString()};
-                connector.NonQuery(col,val,"insert into mydb.`table`(Date,Android,Java,`C#.NET`,PHP,Cpp,JavaScript,Ruby,IOS) values(" +"'"+
-                    DateTime.Today.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) + "',"+
-                    col[0] + "," +
-                    col[1] + "," +
-                    col[2] + "," +
-                    col[3] + "," +
-                    col[4] + "," +
-                    col[5] + "," +
-                    col[6] + "," +
-                    col[7] + ");");
+                    connector.NonQuery(col, val, "insert into mydb." + DBTable[i] + "(Date,Android,Java,`C#.NET`,PHP,Cpp,JavaScript,Ruby,IOS) values(" + "'" +
+                        DateTime.Today.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) + "'," +
+                        col[0] + "," +
+                        col[1] + "," +
+                        col[2] + "," +
+                        col[3] + "," +
+                        col[4] + "," +
+                        col[5] + "," +
+                        col[6] + "," +
+                        col[7] + ");");
+
+                }
+                threadStarted = false;
                 Application.Current.Dispatcher.Invoke(() => {
                     PopulateList();
                 });
             }
             catch (Exception exception)
             {
+                threadStarted = false;
                 MessageBox.Show(exception.Message);
             }
 //            load.Close();
@@ -489,6 +469,28 @@ private void DbClick(object sender, RoutedEventArgs e)
         private void ShowErrLog(object sender, RoutedEventArgs e)
         {
             new ErrorLog().Show();
+        }
+
+        private void ChangeTable_Click(object sender, RoutedEventArgs e)
+        {
+            if (tableID < DBTable.Length-1)
+            {
+                tableID++;
+            }
+            else
+            {
+                tableID = 0;
+            }
+            Title = Titles[tableID];
+            PopulateList();
+        }
+        public void StartNewThread(Action method)
+        {
+            threadStarted = true;
+                new Thread(new ThreadStart(method))
+                {
+                    IsBackground = true
+                }.Start();
         }
     }
 }
