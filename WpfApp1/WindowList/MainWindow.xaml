@@ -5,20 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Closing="Main_Window_Closing"
-        Title="List" Top="0" d:DesignWidth="964" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="ThreeDBorderWindow">
+        Title="List" Top="0" d:DesignWidth="964" 
+        WindowStartupLocation="CenterScreen" 
+        WindowState="Maximized">
     <Grid Margin="0,0,0,-0.801">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="29*"/>
-            <ColumnDefinition Width="123*"/>
+            <ColumnDefinition Width="34*"/>
+            <ColumnDefinition Width="205*"/>
         </Grid.ColumnDefinitions>
-        <Border HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" >
-            <Button Content="Close" Click="CloseBtn" Height="19.96"/>
+        <Border Margin="15,0,0,35" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Button Content="Close" Click="CloseBtn" Height="20" Width="75"/>
         </Border>
-        <Border HorizontalAlignment="Right" Margin="530,0,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1">
-            <Button Content="Update" Click="Button_Click" Height="19.96"/>
+        <Border HorizontalAlignment="Right" Margin="0,0,15,35" VerticalAlignment="Bottom" Width="75" Grid.Column="1">
+            <Button Content="Update" Click="Button_Click" Height="20" Width="75"/>
         </Border>
         <Border Grid.ColumnSpan="2">
-            <ListView x:Name="ListView" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" Margin="0,21,0,45">
+            <ListView x:Name="ListView" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" Margin="0,21,0,65">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn/>
@@ -26,15 +28,16 @@
                 </ListView.View>
             </ListView>
         </Border>
-        <Border HorizontalAlignment="Left" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1">
-            <Button Name="DeleteButton" Content="Delete" Click="DeleteItem" Height="19.96"/>
+        <Border HorizontalAlignment="Left" Margin="15,0,0,35" VerticalAlignment="Bottom" Width="75" Grid.Column="1">
+            <Button Name="DeleteButton" Content="Delete" Click="DeleteItem" Height="20" Width="75"/>
         </Border>
-        <DockPanel Grid.ColumnSpan="2" VerticalAlignment="Top">
+        <DockPanel Grid.ColumnSpan="2" VerticalAlignment="Top" Height="20">
             <Menu DockPanel.Dock="Top" Height="20">
                 <MenuItem Header="_File">
                     <MenuItem Header="_Plot" Click="Plot"/>
                     <MenuItem Header="_Next Table" Click="ChangeTable_Click"/>
                     <MenuItem Header="_Update" Click="Button_Click"/>
+                    <Separator/>
                     <MenuItem Header="_Close" Click="CloseExit"/>
                 </MenuItem>
                 <MenuItem Name="NewAccButton" Header="_Accounts">
@@ -45,10 +48,9 @@
                     <MenuItem Header="_Show Error Log" Click="ShowErrLog"/>
                 </MenuItem>
             </Menu>
-
         </DockPanel>
-        <ProgressBar Name="ProgressBar" Grid.ColumnSpan="2" Maximum="16" Minimum="0" Height="3" VerticalAlignment="Top" Margin="1,20,-1,0"/>
-
+        <Label  Name="InfoBox" Padding="0,-2,0,0" Grid.ColumnSpan="2" BorderThickness="0,1,0,0" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderBrush="{DynamicResource LightBorderBrush}" Height="24" VerticalAlignment="Bottom" HorizontalContentAlignment="Stretch"/>
+        <ProgressBar Name="ProgressBar" Grid.ColumnSpan="2" Maximum="16" Minimum="0" Height="2" VerticalAlignment="Top" Margin="1,20,-1,0"/>
     </Grid>
 </Window>
 

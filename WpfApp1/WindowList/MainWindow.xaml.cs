@@ -209,7 +209,8 @@ namespace WpfApp1.WindowList
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                InfoBox.Content = ex.Message;
+                connector.WriteError("PopulateList()\n"+ex.Message);
                 Console.WriteLine(ex.StackTrace);
             }
         }
@@ -302,7 +303,7 @@ namespace WpfApp1.WindowList
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                InfoBox.Content = ex.Message;
                 Console.WriteLine(ex.StackTrace);
             }
         }
@@ -408,7 +409,7 @@ namespace WpfApp1.WindowList
                     }
                     //                load.LoadingText.Content = "Connecting...";
                     //                load.Show();
-                    string[] lib = { "Android", "Java", "C#.NET", "PHP", "C++", "JavaScript", "Ruby", "IOS" };
+                    string[] lib = { "Android", "Java", "\"C#.NET\"", "PHP", "\"C++\"", "JavaScript", "Ruby", "IOS" };
                     ArrayList results = new ArrayList();
                     foreach (string s in lib)
                     {
@@ -467,8 +468,8 @@ namespace WpfApp1.WindowList
             {
                 threadStarted = false; Application.Current.Dispatcher.Invoke(() => {
                     ProgressBar.Visibility = Visibility.Collapsed;
+                    InfoBox.Content = exception.Message;
                 });
-                MessageBox.Show(exception.Message);
             }
 //            load.Close();
         }
@@ -504,6 +505,11 @@ namespace WpfApp1.WindowList
                 {
                     IsBackground = true
                 }.Start();
+        }
+
+        public string GetCurrentTable()
+        {
+            return DBTable[tableID];
         }
     }
 }

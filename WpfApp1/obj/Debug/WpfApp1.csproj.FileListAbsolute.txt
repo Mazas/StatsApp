@@ -98,3 +98,4 @@ C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WindowList\AccountInfo.g.
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WindowList\AccountInfo.baml
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WindowList\ErrorLog.g.cs
 C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\WindowList\ErrorLog.baml
+C:\Users\ivana\Source\Repos\StatsApp\WpfApp1\obj\Debug\Simple Styles.baml

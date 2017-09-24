@@ -49,12 +49,12 @@ namespace WpfApp1.WindowList
                     int.Parse(php.Text).ToString(),int.Parse(cpp.Text).ToString(),int.Parse(script.Text).ToString(),int.Parse(ruby.Text).ToString(),
                     int.Parse(ios.Text).ToString()};
 
-                String query = "update mydb.`table`set Android=" + col[1] + ",Java=" + col[2] +
+                String query = "update mydb."+main.GetCurrentTable()+" set Android=" + col[1] + ",Java=" + col[2] +
                     ",`C#.NET`=" + col[3] + ",PHP=" + col[4] + ",Cpp=" + col[5] +
                     ",JavaScript=" + col[6] + ",Ruby=" + col[7] + ",IOS=" + col[8] + " where Date=" + col[0] + ";";
                 if (!main.connector.NonQuery(col,val,query))
                 {
-                    MessageBox.Show("Unable to connect");
+                    main.InfoBox.Content = "Unable to connect";
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace WpfApp1.WindowList
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                main.InfoBox.Content = ex.Message;
             }
         }
     }
