@@ -35,7 +35,7 @@
         <TextBox HorizontalAlignment="Left" x:Name="ruby" Height="23" Margin="483.984,24.04,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
         <TextBox HorizontalAlignment="Left" x:Name="ios" Height="23" Margin="483.984,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="36.016"/>
         <Label Content="Total" HorizontalAlignment="Left" Margin="390.45,83,0,0" VerticalAlignment="Top"/>
-        <Label Content="" Name="Total" HorizontalAlignment="Left" Margin="483.984,85.96,0,0" VerticalAlignment="Top" Width="36.016"/>
+        <Label Content="" Name="Total" HorizontalAlignment="Left" Margin="447.079,85.96,0,0" VerticalAlignment="Top" Width="72.921" HorizontalContentAlignment="Right"/>
 
     </Grid>
 

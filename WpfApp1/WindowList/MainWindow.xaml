@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Closing="Main_Window_Closing"
-        Title="List" Top="0" d:DesignWidth="964" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="List" Top="0" d:DesignWidth="964" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="ThreeDBorderWindow">
     <Grid Margin="0,0,0,-0.801">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="29*"/>
             <ColumnDefinition Width="123*"/>
         </Grid.ColumnDefinitions>
-        <Border HorizontalAlignment="Left" Margin="10,474.841,0,10" VerticalAlignment="Bottom" Width="75" >
+        <Border HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" >
             <Button Content="Close" Click="CloseBtn" Height="19.96"/>
         </Border>
-        <Border HorizontalAlignment="Right" Margin="530,474.841,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1">
+        <Border HorizontalAlignment="Right" Margin="530,0,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1">
             <Button Content="Update" Click="Button_Click" Height="19.96"/>
         </Border>
         <Border Grid.ColumnSpan="2">
@@ -26,7 +26,7 @@
                 </ListView.View>
             </ListView>
         </Border>
-        <Border HorizontalAlignment="Left" Margin="0,474.841,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1">
+        <Border HorizontalAlignment="Left" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1">
             <Button Name="DeleteButton" Content="Delete" Click="DeleteItem" Height="19.96"/>
         </Border>
         <DockPanel Grid.ColumnSpan="2" VerticalAlignment="Top">
@@ -47,6 +47,7 @@
             </Menu>
 
         </DockPanel>
+        <ProgressBar Name="ProgressBar" Grid.ColumnSpan="2" Maximum="16" Minimum="0" Height="3" VerticalAlignment="Top" Margin="1,20,-1,0"/>
 
     </Grid>
 </Window>

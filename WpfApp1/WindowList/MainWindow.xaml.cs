@@ -50,6 +50,7 @@ namespace WpfApp1.WindowList
                 login.Hide();
             }
             Title = Titles[tableID];
+            ProgressBar.Visibility = Visibility.Collapsed;
         }
 
 
@@ -376,7 +377,10 @@ namespace WpfApp1.WindowList
         // Retrieve xml from API and save it to DB
         public void RetrieveXML()
         {
-
+            Application.Current.Dispatcher.Invoke(() => {
+                ProgressBar.Visibility = Visibility.Visible;
+                ProgressBar.Value = 0;
+            });
             //           Window2 load = new Window2();
             try
             {
@@ -392,6 +396,9 @@ namespace WpfApp1.WindowList
                         //Throws index out of range exception if there is no entry
                         if (arr[0][0] != null)
                         {
+                            Application.Current.Dispatcher.Invoke(() => {
+                                ProgressBar.Value += 8;
+                            });
                             continue;
                         }
                     }
@@ -425,8 +432,11 @@ namespace WpfApp1.WindowList
                          });
                          */
                         results.Add(xml.Root.Element("antal_platserTotal").Value);
-                            
-                            Console.WriteLine(xml.Root.Element("antal_platserTotal").Value+"Antal sidor: "+xml.Root.Element("antal_sidor").Value);
+                        Application.Current.Dispatcher.Invoke(() => {
+                            ProgressBar.Value += 1;
+                        });
+
+                        Console.WriteLine(xml.Root.Element("antal_platserTotal").Value+"Antal sidor: "+xml.Root.Element("antal_sidor").Value);
                     }
 
                     //                load.LoadingText.Content = "Saving...";
@@ -449,12 +459,15 @@ namespace WpfApp1.WindowList
                 }
                 threadStarted = false;
                 Application.Current.Dispatcher.Invoke(() => {
+                    ProgressBar.Visibility = Visibility.Collapsed;
                     PopulateList();
                 });
             }
             catch (Exception exception)
             {
-                threadStarted = false;
+                threadStarted = false; Application.Current.Dispatcher.Invoke(() => {
+                    ProgressBar.Visibility = Visibility.Collapsed;
+                });
                 MessageBox.Show(exception.Message);
             }
 //            load.Close();
