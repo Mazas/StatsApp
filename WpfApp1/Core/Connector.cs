@@ -99,7 +99,7 @@ namespace WpfApp1
             catch (Exception e)
             {
                 returnString = e.Message;
-                WriteError(DateTime.Now.ToString() + "\n"+commandString+"\n"+e.Message+"\n---------------------------------------------------------------------------------------\n");
+                WriteError(commandString+"\n"+e.Message);
             }
             Conn.Close();
             return returnString;
@@ -171,12 +171,12 @@ namespace WpfApp1
             }
             catch (Exception e)
             {
-                string contents = DateTime.Now.ToString()+"\n";
+                string contents = "";
                 foreach (string s in colums)
                 {
                     contents += s + " ";
                 }
-                contents+="\n" + e.Message + "\n---------------------------------------------------------------------------------------\n";
+                contents+="\n" + e.Message;
                 WriteError(contents);
                 Conn.Close();
                 throw e;
@@ -206,12 +206,12 @@ namespace WpfApp1
                     command.Connection.Close();
                     return false;
                 }
-                string contents = DateTime.Now.ToString()+"\n"+query+"\n";
+                string contents = query;
                 foreach(string s in values)
                 {
                     contents += s + " ";
                 }
-                contents += "\n"+ex.Message+"\n---------------------------------------------------------------------------------------\n";
+                contents += "\n"+ex.Message;
                 WriteError(contents);
        
                 command.Connection.Close();
@@ -249,16 +249,17 @@ namespace WpfApp1
             }
             catch (Exception ex)
             {
-                WriteError(DateTime.Now.ToString() + "\n" + Query + "\n"+message[0]+ " "+message[1]+" "+message[2]+"\n" + ex.Message + "\n---------------------------------------------------------------------------------------\n");
+                WriteError(Query + "\n"+message[0]+ " "+message[1]+" "+message[2]+"\n" + ex.Message);
                 MyCommand2.Connection.Close();
                 throw ex;
                 //return false;
             }
         }
-        private void WriteError(string error)
+        public void WriteError(string error)
         {
             System.IO.Directory.CreateDirectory("Logs");
             string path = @"Logs\ErrorLog.txt";
+            error= DateTime.Now.ToString() + "\n"+ error + "\n---------------------------------------------------------------------------------------\n";
 
             if (!File.Exists(path))
             {

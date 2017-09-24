@@ -45,7 +45,9 @@ namespace WpfApp1.WindowList
             {
                 main.trigger = false;
                 string[] col = {"@Date","@android","@java","@net","@php","@cpp","@script","@ruby","@ios"};
-                string[] val = {Title, androidN.Text, javaN.Text, net.Text,php.Text,cpp.Text,script.Text,ruby.Text,ios.Text};
+                string[] val = {Title, int.Parse(androidN.Text).ToString(), int.Parse(javaN.Text).ToString(), int.Parse(net.Text).ToString(),
+                    int.Parse(php.Text).ToString(),int.Parse(cpp.Text).ToString(),int.Parse(script.Text).ToString(),int.Parse(ruby.Text).ToString(),
+                    int.Parse(ios.Text).ToString()};
 
                 String query = "update mydb.`table`set Android=" + col[1] + ",Java=" + col[2] +
                     ",`C#.NET`=" + col[3] + ",PHP=" + col[4] + ",Cpp=" + col[5] +
