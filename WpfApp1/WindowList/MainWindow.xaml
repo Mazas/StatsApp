@@ -40,9 +40,10 @@
                     <Separator/>
                     <MenuItem Header="_Close" Click="CloseExit"/>
                 </MenuItem>
-                <MenuItem Name="NewAccButton" Header="_Accounts">
-                    <MenuItem Header="_New Account" Click="NewAcc"/>
-                    <MenuItem Header="_Edit Accounts" Click="EditAccounts"/>
+                <MenuItem Header="_Accounts">
+                    <MenuItem Name="New_Account" Header="_New Account" Click="NewAcc"/>
+                    <MenuItem Header="_My Account" Click="MyAccountButton"/>
+                    <MenuItem Name="Edit_Accounts" Header="_Edit Accounts" Click="EditAccounts"/>
                 </MenuItem>
                 <MenuItem Name="HelpList" Header="_Help">
                     <MenuItem Header="_Show Error Log" Click="ShowErrLog"/>
@@ -50,7 +51,7 @@
             </Menu>
         </DockPanel>
         <Label  Name="InfoBox" Padding="0,-2,0,0" Grid.ColumnSpan="2" BorderThickness="0,1,0,0" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderBrush="{DynamicResource LightBorderBrush}" Height="24" VerticalAlignment="Bottom" HorizontalContentAlignment="Stretch"/>
-        <ProgressBar Name="ProgressBar" Grid.ColumnSpan="2" Maximum="16" Minimum="0" Height="2" VerticalAlignment="Top" Margin="1,20,-1,0"/>
+        <ProgressBar Name="ProgressBar" Grid.ColumnSpan="2" Minimum="0" Height="2" VerticalAlignment="Top" Margin="1,20,-1,0"/>
     </Grid>
 </Window>
 

@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace WpfApp1.WindowList
 {
@@ -22,11 +12,29 @@ namespace WpfApp1.WindowList
     {
         private Connector connector;
         private AccountList acc;
+
+        // Was this opened with My Account button?
+        private bool MyAccount;
         public AccountInfo(AccountList acc)
         {
+            MyAccount = false;
             this.acc = acc;
             connector = acc.main.connector;
             InitializeComponent();
+            Message.Content = "";
+        }
+        public AccountInfo(Connector connector)
+        {
+            MyAccount = true;
+            this.connector = connector;
+            InitializeComponent();
+            if (!connector.acc.IsAdmin)
+            {
+                AdminBox.IsEnabled = false;
+            }
+            Title = connector.acc.Username;
+            Email.Text = connector.acc.Email;
+            username.Content = connector.acc.Username;
             Message.Content = "";
         }
 
@@ -81,9 +89,16 @@ namespace WpfApp1.WindowList
 
             if (connector.NonQuery(col,val, query))
             {
-                acc.windowOpen = false;
-                acc.PopulateList();
-                Close();
+                if (!MyAccount)
+                {
+                    acc.windowOpen = false;
+                    acc.PopulateList();
+                    Close();
+                }
+                else
+                {
+                    Close();
+                }
             }
             else
             {
@@ -93,15 +108,25 @@ namespace WpfApp1.WindowList
 
         private void Close(object sender, RoutedEventArgs e)
         {
-            acc.windowOpen = false;
-            acc.PopulateList();
-            Close();
+            if (!MyAccount)
+            {
+                acc.windowOpen = false;
+                acc.PopulateList();
+                Close();
+            }
+            else
+            {
+                Close();
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            acc.windowOpen = false;
-            acc.PopulateList();
+            if (!MyAccount)
+            {
+                acc.windowOpen = false;
+                acc.PopulateList();
+            }
         }
     }
 }

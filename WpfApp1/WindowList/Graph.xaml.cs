@@ -1,7 +1,5 @@
 ﻿using System.Windows;
 using OxyPlot;
-using OxyPlot.Series;
-using OxyPlot.Wpf;
 using System;
 using OxyPlot.Axes;
 

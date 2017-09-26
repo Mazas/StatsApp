@@ -51,6 +51,7 @@ namespace WpfApp1.WindowList
             }
             Title = Titles[tableID];
             ProgressBar.Visibility = Visibility.Collapsed;
+            ProgressBar.Maximum = ApiQuery.Length * 8;
         }
 
 
@@ -79,14 +80,16 @@ namespace WpfApp1.WindowList
                 connector = new Connector();
                 bool returnThis;
                 returnThis= connector.Login(usr, pass);
-                if (!connector.Admin)
+                if (!connector.acc.IsAdmin)
                 {
-                    NewAccButton.Visibility=Visibility.Hidden;
-                    DeleteButton.Visibility = Visibility.Hidden;
+                    New_Account.Visibility=Visibility.Collapsed;
+                    Edit_Accounts.Visibility = Visibility.Collapsed;
+                    DeleteButton.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    NewAccButton.Visibility = Visibility.Visible;
+                    New_Account.Visibility = Visibility.Visible;
+                    Edit_Accounts.Visibility = Visibility.Visible;
                     DeleteButton.Visibility = Visibility.Visible;
                 }
                 StartNewThread(RetrieveXML);
@@ -375,6 +378,8 @@ namespace WpfApp1.WindowList
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
         }
+
+
         // Retrieve xml from API and save it to DB
         public void RetrieveXML()
         {
@@ -476,8 +481,7 @@ namespace WpfApp1.WindowList
 
         private void EditAccounts(object sender, RoutedEventArgs e)
         {
-            AccountList accountList = new AccountList(this);
-            accountList.Show();
+            new AccountList(this).Show();
         }
 
         private void ShowErrLog(object sender, RoutedEventArgs e)
@@ -498,6 +502,7 @@ namespace WpfApp1.WindowList
             Title = Titles[tableID];
             PopulateList();
         }
+
         public void StartNewThread(Action method)
         {
             threadStarted = true;
@@ -510,6 +515,11 @@ namespace WpfApp1.WindowList
         public string GetCurrentTable()
         {
             return DBTable[tableID];
+        }
+
+        private void MyAccountButton(object sender, RoutedEventArgs e)
+        {
+            new AccountInfo(connector).Show();
         }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Collections;
-using System.Data;
 using System.IO;
 
 namespace WpfApp1
@@ -13,7 +8,7 @@ namespace WpfApp1
     public class Connector
     {
         MySqlConnection Conn;
-        public bool Admin { get; private set; }
+        public Core.Account acc;
 
 
         public Connector()
@@ -25,16 +20,16 @@ namespace WpfApp1
 
             string connString;
             string path = Environment.CurrentDirectory;
-            path.Replace('/','\\');
-            connString = "Server=192.168.1.247;"+ "CertificateFile="+path+"\\client.pfx;" +
-  "CertificatePassword=pass;"+" database=mydb; Uid=sslclient; Pwd=pass; SSL Mode=Required";
+            path.Replace('/', '\\');
+            connString = "Server=192.168.1.247;" + "CertificateFile=" + path + "\\client.pfx;" +
+  "CertificatePassword=pass;" + " database=mydb; Uid=sslclient; Pwd=pass; SSL Mode=Required";
             Conn = new MySqlConnection(connString);
         }
         //    Certificate Store Location=CurrentUser;
 
 
-            //Login with ssl and password
-            //TODO check escaping characters to prevent sql injection
+        //Login with ssl and password
+        //TODO check escaping characters to prevent sql injection
         public bool Login(string username, string pass)
         {
             try
@@ -45,32 +40,21 @@ namespace WpfApp1
                 Conn.Open();
 
                 reader = command.ExecuteReader();
-                string readable="";
-                string elev = "";
+
+                string[] readable = { "", "", "","" };
                 while (reader.Read())
                 {
-                    readable = reader.GetString("pass");
-                    elev = reader.GetString("elev");
+                    for (int i = 0; i < 4; i++) {
+                        if (!reader.IsDBNull(i))
+                        {
+                            readable[i] = (string)reader.GetValue(i);
+                        }
+                    }
                 }
                 Conn.Close();
-                
-                if (elev.Equals("all"))
-                {
-                    Admin = true;
-                }
-                else
-                {
-                    Admin = false;
-                }
+                acc = new Core.Account(username, readable[3], readable[2]);
 
-                if (!HashnSalt.Verify(pass,readable)) {
-                    Console.WriteLine(pass);
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return HashnSalt.Verify(pass, readable[1]);
             }
             catch (Exception e)
             {
@@ -79,32 +63,6 @@ namespace WpfApp1
                 //return false;
             }
         }
-
-        // Load the last value from the database
-        public string Read(string commandString)
-        {
-            string returnString = "";
-            try
-            {
-                MySqlCommand command = new MySqlCommand(commandString, Conn);
-                MySqlDataReader reader;
-                Conn.Open();
-                reader = command.ExecuteReader();
-                int counter = 0;
-                while (reader.Read())
-                {
-                    returnString = returnString + reader[counter++];
-                }
-            }
-            catch (Exception e)
-            {
-                returnString = e.Message;
-                WriteError(commandString+"\n"+e.Message);
-            }
-            Conn.Close();
-            return returnString;
-        }
-
 
 
         //Read all values from mydb.Table
@@ -123,50 +81,15 @@ namespace WpfApp1
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    for (int i=0;i<colums.Length;i++)
+                    for (int i = 0; i < colums.Length; i++)
                     {
                         if (!reader.IsDBNull(i))
-                        { 
+                        {
                             returnable[i].Add(reader[colums[i]].ToString());
                         }
                     }
                 }
-                    /*ArrayList date = new ArrayList();
-                    ArrayList Android = new ArrayList();
-                    ArrayList Java = new ArrayList();
-                    ArrayList net = new ArrayList();
-                    ArrayList php = new ArrayList();
-                    ArrayList cpp = new ArrayList();
-                    ArrayList script = new ArrayList();
-                    ArrayList ruby = new ArrayList();
-                    ArrayList ios = new ArrayList();
-                    MySqlCommand command = new MySqlCommand(query, Conn);
-                    MySqlDataReader reader;
-                    Conn.Open();
-                    reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        date.Add(reader.GetString("Date"));
-                        Android.Add(reader.GetString("Android"));
-                        Java.Add(reader.GetString("Java"));
-                        net.Add(reader.GetString("C#.NET"));
-                        php.Add(reader.GetString("PHP"));
-                        cpp.Add(reader.GetString("Cpp"));
-                        script.Add(reader.GetString("JavaScript"));
-                        ruby.Add(reader.GetString("Ruby"));
-                        ios.Add(reader.GetString("IOS"));
-                    }
-                    returnable[0] = date;
-                    returnable[1] = Android;
-                    returnable[2] = Java;
-                    returnable[3] = net;
-                    returnable[4] = php;
-                    returnable[5] = cpp;
-                    returnable[6] = script;
-                    returnable[7] = ruby;
-                    returnable[8] = ios;
-                    */
-                    Conn.Close();
+                Conn.Close();
                 return returnable;
             }
             catch (Exception e)
@@ -176,20 +99,21 @@ namespace WpfApp1
                 {
                     contents += s + " ";
                 }
-                contents+="\n" + e.Message;
+                contents += "\n" + e.Message;
                 WriteError(contents);
                 Conn.Close();
                 throw e;
             }
         }
-        //Delete entry
-        //public bool DeleteItem(string query)
-        public bool NonQuery(string[] col, string[] values,string query)
+
+
+        // Update, Delete, Insert so, on.
+        public bool NonQuery(string[] col, string[] values, string query)
         {
             MySqlCommand command = new MySqlCommand(query, Conn);
-            for (int i=0;i<col.Length;i++)
+            for (int i = 0; i < col.Length; i++)
             {
-                command.Parameters.AddWithValue(col[i],values[i]);
+                command.Parameters.AddWithValue(col[i], values[i]);
             }
             try
             {
@@ -207,13 +131,13 @@ namespace WpfApp1
                     return false;
                 }
                 string contents = query;
-                foreach(string s in values)
+                foreach (string s in values)
                 {
                     contents += s + " ";
                 }
-                contents += "\n"+ex.Message;
+                contents += "\n" + ex.Message;
                 WriteError(contents);
-       
+
                 command.Connection.Close();
                 Console.WriteLine(ex.Message);
                 return false;
@@ -227,39 +151,33 @@ namespace WpfApp1
             string Query = "insert into mydb.users(username, pass, elev) values(@username ,@pass ,@elev);";
 
             MySqlCommand MyCommand2 = new MySqlCommand(Query, Conn);
-            MyCommand2.Parameters.AddWithValue("@username",message[0]);
-            MyCommand2.Parameters.AddWithValue("@pass",message[1]);
-            MyCommand2.Parameters.AddWithValue("@elev",message[2]);
+            MyCommand2.Parameters.AddWithValue("@username", message[0]);
+            MyCommand2.Parameters.AddWithValue("@pass", message[1]);
+            MyCommand2.Parameters.AddWithValue("@elev", message[2]);
 
             try
             {
-                
+
                 MyCommand2.Connection.Open();
                 MyCommand2.ExecuteNonQuery();
-                /*MySqlDataReader MyReader2;
-                Conn.Open();
-                MyReader2 = MyCommand2.ExecuteReader();
-                while (MyReader2.Read())
-                {
-
-                }
-                */
                 MyCommand2.Connection.Close();
                 return true;
             }
             catch (Exception ex)
             {
-                WriteError(Query + "\n"+message[0]+ " "+message[1]+" "+message[2]+"\n" + ex.Message);
+                WriteError(Query + "\n" + message[0] + " " + message[1] + " " + message[2] + "\n" + ex.Message);
                 MyCommand2.Connection.Close();
                 throw ex;
                 //return false;
             }
         }
+
+
         public void WriteError(string error)
         {
-            System.IO.Directory.CreateDirectory("Logs");
+            Directory.CreateDirectory("Logs");
             string path = @"Logs\ErrorLog.txt";
-            error= DateTime.Now.ToString() + "\n"+ error + "\n---------------------------------------------------------------------------------------\n";
+            error = DateTime.Now.ToString() + "\n" + error + "\n---------------------------------------------------------------------------------------\n";
 
             if (!File.Exists(path))
             {
